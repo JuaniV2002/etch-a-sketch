@@ -2,12 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Grid Sketch Pad</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etch-a-Sketch Grid</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f7f9fc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #reset {
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(145deg, #64b5f6, #42a5f5);
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 10px rgba(0, 123, 255, 0.2);
+      transition: transform 0.2s;
+    }
+
+    #reset:hover {
+      transform: translateY(-2px);
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      width: 600px;
+      height: 600px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    .grid-item {
+      box-sizing: border-box;
+      border: 1px solid #e0e0e0;
+    }
+  </style>
 </head>
 <body>
   <button id="reset">Reset Grid</button>
   <div class="container"></div>
-  <script src="script.js"></script>
+
+  <script>
+    const container = document.querySelector('.container');
+    const resetButton = document.getElementById('reset');
+
+    function createGrid(size) {
+      container.innerHTML = '';
+      const squareSize = 600 / size;
+
+      for (let i = 0; i < size * size; i++) {
+        const div = document.createElement('div');
+        div.classList.add('grid-item');
+        div.style.width = `${squareSize}px`;
+        div.style.height = `${squareSize}px`;
+
+        div.addEventListener('mouseenter', () => {
+          let h, s, l;
+
+          if (!div.dataset.hue) {
+            h = Math.floor(Math.random() * 360);
+            s = 100;
+            l = 100;
+            div.dataset.hue = h;
+            div.dataset.saturation = s;
+            div.dataset.lightness = l;
+            div.dataset.darkenCount = 0;
+          } else {
+            h = parseInt(div.dataset.hue);
+            s = parseInt(div.dataset.saturation);
+            let darkenCount = parseInt(div.dataset.darkenCount);
+
+            if (darkenCount < 10) {
+              darkenCount += 1;
+              l = 100 - darkenCount * 10;
+              div.dataset.lightness = l;
+              div.dataset.darkenCount = darkenCount;
+            } else {
+              l = 0;
+            }
+          }
+
+          div.style.backgroundColor = `hsl(${h}, ${s}%, ${l}%)`;
+        });
+
+        container.appendChild(div);
+      }
+    }
+
+    resetButton.addEventListener('click', () => {
+      let newSize = parseInt(prompt('Enter new grid size (maximum 100):'));
+      if (newSize && newSize > 0 && newSize <= 100) {
+        createGrid(newSize);
+      } else {
+        alert('Please enter a number between 1 and 100.');
+      }
+    });
+
+    createGrid(16);
+  </script>
 </body>
 </html>
