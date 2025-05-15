@@ -24,6 +24,12 @@ button, select, input[type="color"] {
   border-radius: 6px;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+button:hover, select:hover, input[type="color"]:hover {
+  background-color: #d5d5d5;
 }
 
 .container {
@@ -43,4 +49,5 @@ canvas {
   border-radius: 12px;
   cursor: crosshair;
   image-rendering: pixelated;
+  pointer-events: auto;
 }
