@@ -10,9 +10,7 @@ A simple interactive grid-based drawing app inspired by the classic Etch-a-Sketc
 - Modern design with responsive UI elements.
 
 ### Usage
-1. Open `index.html` in your web browser.
-2. Hover over the grid to draw.
-3. Click "Reset Grid" to clear and resize the drawing area.
+[Click here!](https://juaniv2002.github.io/etch-a-sketch/)
 
 ### Technologies
 - HTML
