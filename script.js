@@ -1,118 +1,56 @@
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const resetBtn = document.getElementById('reset');
-const clearBtn = document.getElementById('clear');
-const toggleGridBtn = document.getElementById('toggleGrid');
-const colorPicker = document.getElementById('colorPicker');
-const colorModeSelect = document.getElementById('colorMode');
-const saveBtn = document.getElementById('save');
+const container = document.querySelector('.container');
+const resetButton = document.getElementById('reset');
 
-let isDrawing = false;
-let colorMode = 'black';
-let showGrid = true;
-let size = 32;
-const canvasSize = 600;
+function createGrid(size) {
+  container.innerHTML = '';
+  const squareSize = 600 / size;
 
-canvas.width = canvasSize;
-canvas.height = canvasSize;
-let cellSize = canvasSize / size;
+  for (let i = 0; i < size * size; i++) {
+    const div = document.createElement('div');
+    div.classList.add('grid-item');
+    div.style.width = `${squareSize}px`;
+    div.style.height = `${squareSize}px`;
 
-function drawGrid() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (showGrid) {
-    ctx.strokeStyle = '#e0e0e0';
-    for (let i = 0; i <= size; i++) {
-      ctx.beginPath();
-      ctx.moveTo(i * cellSize, 0);
-      ctx.lineTo(i * cellSize, canvas.height);
-      ctx.moveTo(0, i * cellSize);
-      ctx.lineTo(canvas.width, i * cellSize);
-      ctx.stroke();
-    }
+    div.addEventListener('mouseenter', () => {
+      let h, s, l;
+
+      if (!div.dataset.hue) {
+        h = Math.floor(Math.random() * 360);
+        s = 100;
+        l = 100;
+        div.dataset.hue = h;
+        div.dataset.saturation = s;
+        div.dataset.lightness = l;
+        div.dataset.darkenCount = 0;
+      } else {
+        h = parseInt(div.dataset.hue);
+        s = parseInt(div.dataset.saturation);
+        let darkenCount = parseInt(div.dataset.darkenCount);
+
+        if (darkenCount < 10) {
+          darkenCount += 1;
+          l = 100 - darkenCount * 10;
+          div.dataset.lightness = l;
+          div.dataset.darkenCount = darkenCount;
+        } else {
+          l = 0;
+        }
+      }
+
+      div.style.backgroundColor = `hsl(${h}, ${s}%, ${l}%)`;
+    });
+
+    container.appendChild(div);
   }
 }
 
-function initCanvas() {
-  cellSize = canvasSize / size;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawGrid();
-}
-
-function getColor() {
-  switch (colorMode) {
-    case 'random':
-      return `hsl(${Math.random() * 360}, 100%, 50%)`;
-    case 'grayscale':
-      const level = Math.floor(Math.random() * 256);
-      return `rgb(${level}, ${level}, ${level})`;
-    case 'color':
-      return colorPicker.value;
-    case 'eraser':
-      return '#ffffff';
-    default:
-      return '#000000';
-  }
-}
-
-function drawCell(x, y) {
-  const col = Math.floor(x / cellSize);
-  const row = Math.floor(y / cellSize);
-  ctx.fillStyle = getColor();
-  ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
-  if (showGrid) {
-    ctx.strokeStyle = '#e0e0e0';
-    ctx.strokeRect(col * cellSize, row * cellSize, cellSize, cellSize);
-  }
-}
-
-canvas.addEventListener('mousedown', (e) => {
-  isDrawing = true;
-  drawCell(e.offsetX, e.offsetY);
-});
-
-canvas.addEventListener('mousemove', (e) => {
-  if (isDrawing) {
-    drawCell(e.offsetX, e.offsetY);
-  }
-});
-
-canvas.addEventListener('mouseup', () => {
-  isDrawing = false;
-});
-
-canvas.addEventListener('mouseleave', () => {
-  isDrawing = false;
-});
-
-resetBtn.addEventListener('click', () => {
+resetButton.addEventListener('click', () => {
   let newSize = parseInt(prompt('Enter new grid size (maximum 100):'));
-  if (newSize > 0 && newSize <= 100) {
-    size = newSize;
-    initCanvas();
+  if (newSize && newSize > 0 && newSize <= 100) {
+    createGrid(newSize);
   } else {
     alert('Please enter a number between 1 and 100.');
   }
 });
 
-clearBtn.addEventListener('click', () => {
-  initCanvas();
-});
-
-toggleGridBtn.addEventListener('click', () => {
-  showGrid = !showGrid;
-  drawGrid();
-});
-
-colorModeSelect.addEventListener('change', (e) => {
-  colorMode = e.target.value;
-});
-
-saveBtn.addEventListener('click', () => {
-  const link = document.createElement('a');
-  link.download = 'etch-a-sketch.png';
-  link.href = canvas.toDataURL();
-  link.click();
-});
-
-// Inicializar
-initCanvas();
+createGrid(16);
