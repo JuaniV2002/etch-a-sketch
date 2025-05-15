@@ -18,4 +18,4 @@ A simple interactive grid-based drawing app inspired by the classic Etch-a-Sketc
 - JavaScript
 
 ### Screenshot
-![Screenshot 2025-05-01 at 17 35 03](https://github.com/user-attachments/assets/a7a2cf97-cea8-4415-846b-0af9d652f61e)
+![Screenshot 2025-05-15 at 01 40 18](https://github.com/user-attachments/assets/e96b1c70-bd3a-424d-b194-e942a92fe2b6)
