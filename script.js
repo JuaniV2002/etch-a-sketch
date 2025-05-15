@@ -11,10 +11,11 @@ let isDrawing = false;
 let colorMode = 'black';
 let showGrid = true;
 let size = 32;
+const canvasSize = 600;
 
-canvas.width = 600;
-canvas.height = 600;
-const cellSize = canvas.width / size;
+canvas.width = canvasSize;
+canvas.height = canvasSize;
+let cellSize = canvasSize / size;
 
 function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -31,9 +32,13 @@ function drawGrid() {
   }
 }
 
-drawGrid();
+function initCanvas() {
+  cellSize = canvasSize / size;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawGrid();
+}
 
-function getColor(x, y) {
+function getColor() {
   switch (colorMode) {
     case 'random':
       return `hsl(${Math.random() * 360}, 100%, 50%)`;
@@ -52,7 +57,7 @@ function getColor(x, y) {
 function drawCell(x, y) {
   const col = Math.floor(x / cellSize);
   const row = Math.floor(y / cellSize);
-  ctx.fillStyle = getColor(x, y);
+  ctx.fillStyle = getColor();
   ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
   if (showGrid) {
     ctx.strokeStyle = '#e0e0e0';
@@ -83,16 +88,14 @@ resetBtn.addEventListener('click', () => {
   let newSize = parseInt(prompt('Enter new grid size (maximum 100):'));
   if (newSize > 0 && newSize <= 100) {
     size = newSize;
-    canvas.width = canvas.height = 600;
-    drawGrid();
+    initCanvas();
   } else {
     alert('Please enter a number between 1 and 100.');
   }
 });
 
 clearBtn.addEventListener('click', () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawGrid();
+  initCanvas();
 });
 
 toggleGridBtn.addEventListener('click', () => {
@@ -110,3 +113,6 @@ saveBtn.addEventListener('click', () => {
   link.href = canvas.toDataURL();
   link.click();
 });
+
+// Inicializar
+initCanvas();
