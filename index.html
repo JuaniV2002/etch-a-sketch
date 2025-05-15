@@ -2,29 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Enhanced Etch-a-Sketch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Etch-a-Sketch Grid</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="controls">
-    <button id="reset">Reset Grid</button>
-    <button id="clear">Clear</button>
-    <button id="toggleGrid">Toggle Gridlines</button>
-    <input type="color" id="colorPicker" value="#000000" />
-    <select id="colorMode">
-      <option value="black">Black</option>
-      <option value="random">Random</option>
-      <option value="grayscale">Grayscale</option>
-      <option value="color">Color Picker</option>
-      <option value="eraser">Eraser</option>
-    </select>
-    <button id="save">Save Image</button>
-  </div>
-
-  <div class="container" id="canvasContainer">
-    <canvas id="canvas" width="600" height="600"></canvas>
-  </div>
+  <button id="reset">Reset Grid</button>
+  <div class="container"></div>
 
   <script src="script.js"></script>
 </body>
