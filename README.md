@@ -4,10 +4,19 @@
 A simple interactive grid-based drawing app inspired by the classic Etch-a-Sketch toy.
 
 ### Features
-- Customizable grid size (up to 100x100).
-- Hover-based drawing with randomly colored squares.
-- Colors progressively darken upon repeated interaction.
-- Modern design with responsive UI elements.
+- Draw on a customizable grid (up to 100x100)
+- Color modes:
+  - Black
+  - Random color (HSL)
+  - Grayscale
+  - Custom color (color picker)
+  - Eraser (white)
+- Dynamic grid resizing via "Reset Grid" button
+- Clear the entire canvas with "Clear" button
+- Toggle gridlines (ON/OFF)
+- Export canvas as PNG image
+- Built using `<canvas>` for performance and accuracy
+- Clean, modern interface with responsive, styled controls
 
 ### Usage
 [Click here!](https://juaniv2002.github.io/etch-a-sketch/)
