@@ -19,7 +19,7 @@ A simple interactive grid-based drawing app inspired by the classic Etch-a-Sketc
 - Clean, modern interface with responsive, styled controls
 
 ### Usage
-[Click here!](https://juaniv2002.github.io/etch-a-sketch/)
+[Click here!](https://juaniv2002.github.io/etch_a_sketch/)
 
 ### Technologies
 - HTML
